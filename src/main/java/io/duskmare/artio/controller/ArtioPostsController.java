@@ -1,5 +1,6 @@
 package io.duskmare.artio.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,17 +24,17 @@ public class ArtioPostsController {
     private final ArtioPostService postService;
 
     @PostMapping
-    public CreatePostResponse createPost(@RequestBody @Valid CreatePostRequest request) {
-        return postService.createPost(request);
+    public ResponseEntity<CreatePostResponse> createPost(@RequestBody @Valid CreatePostRequest request) {
+        return ResponseEntity.ok(postService.createPost(request));
     }
 
     @GetMapping
-    public DescribePostResponse describePost(@RequestBody @Valid DescribePostRequest request) {
-        return postService.describePost(request);
+    public ResponseEntity<DescribePostResponse> describePost(@RequestBody @Valid DescribePostRequest request) {
+        return ResponseEntity.ok(postService.describePost(request));
     }
 
     @GetMapping("/all")
-    public DescribePostsResponse describePosts(@RequestBody @Valid DescribePostsRequest request) {
-        return postService.describePosts(request);
+    public ResponseEntity<DescribePostsResponse> describePosts(@RequestBody @Valid DescribePostsRequest request) {
+        return ResponseEntity.ok(postService.describePosts(request));
     }
 }

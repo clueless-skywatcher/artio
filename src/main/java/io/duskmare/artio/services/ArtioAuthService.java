@@ -8,7 +8,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import io.duskmare.artio.dtos.SignUpDTO;
+import io.duskmare.artio.dtos.requests.SignUpRequest;
+import io.duskmare.artio.exceptions.UserAlreadyExistsException;
 import io.duskmare.artio.models.ArtioUser;
 import io.duskmare.artio.models.ArtioUserRole;
 import io.duskmare.artio.repositories.ArtioUserRepository;
@@ -25,9 +26,9 @@ public class ArtioAuthService implements UserDetailsService {
         return user;
     }
 
-    public UserDetails signUp(SignUpDTO data) {
+    public UserDetails signUp(SignUpRequest data) {
         if (repository.findByUsername(data.username()).isPresent()) {
-            throw new RuntimeException("User already exists");
+            throw new UserAlreadyExistsException("User already exists");
         }
 
         String password = new BCryptPasswordEncoder().encode(data.password());
